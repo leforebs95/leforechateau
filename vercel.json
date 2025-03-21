@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "prisma generate && next build",
+  "buildCommand": "next build",
   "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["sfo1"],
@@ -11,6 +11,7 @@
     "GOOGLE_SECRET": "@google-secret",
     "STRIPE_SECRET_KEY": "@stripe-secret-key",
     "STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key",
-    "DATABASE_URL": "@database-url"
+    "NEXT_PUBLIC_SUPABASE_URL": "@supabase-url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase-anon-key"
   }
 } 
