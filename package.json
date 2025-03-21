@@ -1,0 +1,45 @@
+{
+  "name": "beachhouse",
+  "version": "1.0.0",
+  "description": "Beach house rental platform with AI-powered management",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": [
+    "rental",
+    "beach house",
+    "ai",
+    "booking"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@auth/prisma-adapter": "^2.8.0",
+    "@prisma/client": "^6.5.0",
+    "@stripe/react-stripe-js": "^3.4.0",
+    "@stripe/stripe-js": "^6.0.0",
+    "better-sqlite3": "^8.0.0",
+    "date-fns": "^2.30.0",
+    "next": "^14.0.0",
+    "next-auth": "^4.24.11",
+    "nodemailer": "^6.10.0",
+    "react": "^18.2.0",
+    "react-datepicker": "^4.16.0",
+    "react-dom": "^18.2.0",
+    "stripe": "^17.7.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-datepicker": "^4.11.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.0.0"
+  }
+}
