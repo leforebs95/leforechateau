@@ -5,13 +5,11 @@
   "framework": "nextjs",
   "regions": ["sfo1"],
   "env": {
-    "NEXTAUTH_URL": "https://${VERCEL_URL}",
-    "NEXTAUTH_SECRET": "@nextauth-secret",
-    "GOOGLE_ID": "@google-id",
-    "GOOGLE_SECRET": "@google-secret",
-    "STRIPE_SECRET_KEY": "@stripe-secret-key",
-    "STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key",
-    "NEXT_PUBLIC_SUPABASE_URL": "@supabase-url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase-anon-key"
+    "GOOGLE_ID": "${GOOGLE_ID}",
+    "GOOGLE_SECRET": "${GOOGLE_SECRET}",
+    "STRIPE_SECRET_KEY": "${STRIPE_SECRET_KEY}",
+    "STRIPE_PUBLISHABLE_KEY": "${STRIPE_PUBLISHABLE_KEY}",
+    "SUPABASE_URL": "${SUPABASE_URL}",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "${NEXT_PUBLIC_SUPABASE_ANON_KEY}"
   }
 } 

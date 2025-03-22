@@ -7,12 +7,16 @@ export default function AuthError() {
 
   const getErrorMessage = (error: string) => {
     switch (error) {
-      case 'Configuration':
-        return 'There is a problem with the server configuration.'
-      case 'AccessDenied':
-        return 'You do not have permission to sign in.'
-      case 'Verification':
-        return 'The sign in link is no longer valid. It may have been used already or it may have expired.'
+      case 'invalid_grant':
+        return 'Invalid email or password.'
+      case 'email_not_confirmed':
+        return 'Please confirm your email address before signing in.'
+      case 'invalid_request':
+        return 'Invalid request. Please try again.'
+      case 'user_not_found':
+        return 'No account found with this email address.'
+      case 'too_many_requests':
+        return 'Too many attempts. Please try again later.'
       default:
         return 'An error occurred during authentication. Please try again.'
     }
@@ -32,14 +36,8 @@ export default function AuthError() {
         </p>
         <div className="space-y-4">
           <button
-            onClick={() => router.push('/auth/signin')}
-            className="btn-primary w-full"
-          >
-            Try Again
-          </button>
-          <button
             onClick={() => router.push('/')}
-            className="text-primary hover:text-primary-light transition-colors"
+            className="btn-primary w-full"
           >
             Return Home
           </button>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { getSession } from '@/lib/auth';
 import BookingCalendar from './BookingCalendar';
 
 interface BookingFormProps {
@@ -11,7 +11,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
   basePrice,
   onBookingComplete
 }) => {
-  const { data: session } = useSession()
+  const [session, setSession] = useState<any>(null);
   const [formData, setFormData] = useState({
     guest_name: '',
     guest_email: '',
@@ -30,12 +30,25 @@ const BookingForm: React.FC<BookingFormProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Fetch session on component mount
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const sessionData = await getSession();
+        setSession(sessionData);
+      } catch (error) {
+        console.error('Error fetching session:', error);
+      }
+    };
+    fetchSession();
+  }, []);
+
   // Pre-fill form data if user is logged in
   useEffect(() => {
     if (session?.user) {
       setFormData(prev => ({
         ...prev,
-        guest_name: session.user.name || prev.guest_name,
+        guest_name: session.user.user_metadata?.full_name || prev.guest_name,
         guest_email: session.user.email || prev.guest_email,
       }))
     }

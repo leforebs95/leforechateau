@@ -1,11 +1,24 @@
-import { useSession, signIn, signOut } from 'next-auth/react'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { getSession, signInWithEmail, signInWithGoogle, signOut } from '@/lib/auth'
 
 export default function Header() {
-  const { data: session } = useSession()
+  const [session, setSession] = useState<any>(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // Fetch session on component mount
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const sessionData = await getSession();
+        setSession(sessionData);
+      } catch (error) {
+        console.error('Error fetching session:', error);
+      }
+    };
+    fetchSession();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +27,23 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const handleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+    } catch (error) {
+      console.error('Error signing in:', error);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      setSession(null);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
 
   return (
     <header className={`fixed w-full z-50 transition-colors duration-300 ${
@@ -32,10 +62,10 @@ export default function Header() {
             {session ? (
               <>
                 <span className={`${isScrolled ? 'text-text' : 'text-white'}`}>
-                  {session.user?.name}
+                  {session.user?.user_metadata?.full_name}
                 </span>
                 <button
-                  onClick={() => signOut()}
+                  onClick={handleSignOut}
                   className={`${isScrolled ? 'text-text hover:text-primary' : 'text-white hover:text-gray-200'}`}
                 >
                   Sign Out
@@ -43,7 +73,7 @@ export default function Header() {
               </>
             ) : (
               <button
-                onClick={() => signIn()}
+                onClick={handleSignIn}
                 className={isScrolled ? 'btn-primary' : 'bg-white/10 text-white hover:bg-white/20 px-6 py-2 rounded-lg'}
               >
                 Sign In
@@ -74,10 +104,10 @@ export default function Header() {
             {session ? (
               <div className="space-y-4 px-4">
                 <div className={isScrolled ? 'text-text' : 'text-white'}>
-                  {session.user?.name}
+                  {session.user?.user_metadata?.full_name}
                 </div>
                 <button
-                  onClick={() => signOut()}
+                  onClick={handleSignOut}
                   className={`block w-full text-left ${
                     isScrolled ? 'text-text hover:text-primary' : 'text-white hover:text-gray-200'
                   }`}
@@ -88,7 +118,7 @@ export default function Header() {
             ) : (
               <div className="px-4">
                 <button
-                  onClick={() => signIn()}
+                  onClick={handleSignIn}
                   className={`w-full ${
                     isScrolled ? 'btn-primary' : 'bg-white/10 text-white hover:bg-white/20 px-6 py-2 rounded-lg'
                   }`}
