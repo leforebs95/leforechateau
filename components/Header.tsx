@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { getSession, signInWithEmail, signInWithGoogle, signOut } from '@/lib/auth'
+import SignInModal from './auth/SignInModal'
+import { useAuth } from '@/hooks/useAuth'
 
 export default function Header() {
   const [session, setSession] = useState<any>(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false)
+  const { user, signOut: useAuthSignOut } = useAuth()
 
   // Fetch session on component mount
   useEffect(() => {
@@ -73,7 +77,7 @@ export default function Header() {
               </>
             ) : (
               <button
-                onClick={handleSignIn}
+                onClick={() => setIsSignInModalOpen(true)}
                 className={isScrolled ? 'btn-primary' : 'bg-white/10 text-white hover:bg-white/20 px-6 py-2 rounded-lg'}
               >
                 Sign In
@@ -118,7 +122,7 @@ export default function Header() {
             ) : (
               <div className="px-4">
                 <button
-                  onClick={handleSignIn}
+                  onClick={() => setIsSignInModalOpen(true)}
                   className={`w-full ${
                     isScrolled ? 'btn-primary' : 'bg-white/10 text-white hover:bg-white/20 px-6 py-2 rounded-lg'
                   }`}
@@ -130,6 +134,11 @@ export default function Header() {
           </div>
         )}
       </div>
+
+      <SignInModal
+        isOpen={isSignInModalOpen}
+        onClose={() => setIsSignInModalOpen(false)}
+      />
     </header>
   )
 } 
